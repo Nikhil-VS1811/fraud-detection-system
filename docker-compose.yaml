@@ -1,0 +1,34 @@
+services:
+
+  db:
+    image: postgres:16
+    container_name: fraud-db
+    restart: always
+    environment:
+      POSTGRES_DB: fraud_detection_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: fraud-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/fraud_detection_db
+
+  frontend:
+    build: ./frontend
+    container_name: fraud-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend

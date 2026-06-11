@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Docker
+.env
+
+# React
+node_modules/
+dist/
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+
+# Logs
+*.log
+
+# Dataset
+ml/data/
+
+# Training models
+ml/models/
