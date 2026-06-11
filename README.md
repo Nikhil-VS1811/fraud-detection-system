@@ -53,6 +53,8 @@ ROC-AUC Score: 97.92%
 
 ### Dashboard
 
+Main application dashboard displaying fraud detection metrics, model overview, and real-time monitoring information.
+
 ![Dashboard](screenshots/dashboard.png)
 
 ### Analytics Dashboard
@@ -63,13 +65,19 @@ Interactive charts showing model performance metrics and fraud prediction distri
 
 ### Fraud Prediction
 
+Transaction feature input form allowing users to submit transaction data and receive real-time fraud probability predictions.
+
 ![Prediction](screenshots/prediction.png)
 
 ### SHAP Explanation
 
+Explainable AI visualization showing the most influential features contributing to each fraud prediction using SHAP values.
+
 ![SHAP](screenshots/shap.png)
 
 ### Transaction History
+
+Historical record of all prediction requests, including fraud status, probability scores, and timestamps stored in PostgreSQL.
 
 ![History](screenshots/history.png)
 
