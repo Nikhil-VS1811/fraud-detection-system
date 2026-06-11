@@ -80,24 +80,26 @@ Explainable AI visualization showing the most influential features contributing 
 Historical record of all prediction requests, including fraud status, probability scores, and timestamps stored in PostgreSQL.
 
 ![History](screenshots/history.png)
-
 ## Architecture
 
-React (Frontend)
+```text
+React Frontend
        │
        ▼
 FastAPI REST API
        │
  ┌─────┴─────┐
  ▼           ▼
-XGBoost    PostgreSQL
-Model       Database
+XGBoost   PostgreSQL
+ Model     Database
        │
        ▼
 SHAP Explainability
+```
 
 ## Project Structure
 
+```text
 fraud-detection-system
 │
 ├── backend
@@ -114,6 +116,7 @@ fraud-detection-system
 │   └── vite.config.js
 │
 └── screenshots
+```
 
 ## Tech Stack
 
