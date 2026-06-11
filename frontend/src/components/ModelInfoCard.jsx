@@ -13,7 +13,7 @@ export default function ModelInfoCard() {
     let cancelled = false;
     setLoading(true);
     setError(null);
-    axios.get("http://localhost:8000/model-info")
+    axios.get(`${API_BASE}/model-info`)
       .then((res) => {
         if (!cancelled) setInfo(res.data);
       })
