@@ -8,7 +8,10 @@ DATABASE_URL = os.getenv(
     "postgresql://postgres:postgres@db:5432/fraud_detection_db"
 )
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True
+)
 
 SessionLocal = sessionmaker(
     autocommit=False,
