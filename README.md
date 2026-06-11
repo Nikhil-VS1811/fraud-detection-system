@@ -1,3 +1,10 @@
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Render](https://img.shields.io/badge/Render-Deployed-purple)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 # Fraud Detection System using XGBoost, FastAPI, React & PostgreSQL
 
 A full-stack machine learning application that detects fraudulent financial transactions in real-time using XGBoost, FastAPI, React, PostgreSQL, and SHAP explainability.
