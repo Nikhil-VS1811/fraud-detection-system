@@ -1,0 +1,256 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680" style="background:#0a0d14; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="flowHeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="trainCardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141926" />
+      <stop offset="100%" stop-color="#11151f" />
+    </linearGradient>
+    <linearGradient id="splitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.08" />
+    </linearGradient>
+    <linearGradient id="testGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.08" />
+    </linearGradient>
+
+    <!-- Arrow Markers -->
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#6366f1" />
+    </marker>
+    <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#a855f7" />
+    </marker>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="flowShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+  </defs>
+
+  <style>
+    .title-text { fill: #f8fafc; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+    .subtitle-text { fill: #94a3b8; font-size: 12px; font-weight: 500; }
+    .step-badge { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+    .card-title { fill: #f1f5f9; font-size: 14px; font-weight: 700; }
+    .card-meta { fill: #94a3b8; font-size: 11px; }
+    .card-highlight { font-size: 11px; font-weight: 600; }
+    .edge-label { font-size: 10px; font-weight: 700; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1000" height="680" rx="16" fill="#0a0d14" stroke="#1e293b" stroke-width="1.5" />
+
+  <!-- Header -->
+  <g transform="translate(30, 24)">
+    <rect width="42" height="42" rx="10" fill="url(#flowHeaderGrad)" filter="url(#flowShadow)" />
+    <text x="21" y="27" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="800">ML</text>
+    <text x="56" y="22" class="title-text">Leak-Free Machine Learning &amp; Training Pipeline</text>
+    <text x="56" y="38" class="subtitle-text">Stratified partitioning, train-only ColumnTransformer scaling, train-only SMOTE, and held-out test evaluation</text>
+  </g>
+
+  <!-- ================= 1. RAW DATASET BOX ================= -->
+  <g transform="translate(30, 90)" filter="url(#flowShadow)">
+    <rect width="210" height="230" rx="12" fill="url(#trainCardGrad)" stroke="#334155" stroke-width="1.5" />
+    <rect x="14" y="14" width="70" height="20" rx="5" fill="#3b82f6" fill-opacity="0.25" />
+    <text x="49" y="28" text-anchor="middle" fill="#60a5fa" class="step-badge">1. RAW DATA</text>
+    
+    <text x="16" y="58" class="card-title">Kaggle Dataset</text>
+    <text x="16" y="74" class="card-meta">Credit Card Fraud (creditcard.csv)</text>
+    
+    <line x1="16" y1="88" x2="194" y2="88" stroke="#1e293b" stroke-width="1" />
+    
+    <text x="16" y="108" class="card-meta">• Total: <tspan fill="#f1f5f9" font-weight="600">284,807 rows</tspan></text>
+    <text x="16" y="126" class="card-meta">• Fraud (1): <tspan fill="#f87171" font-weight="600">492 (0.17%)</tspan></text>
+    <text x="16" y="144" class="card-meta">• Normal (0): <tspan fill="#34d399" font-weight="600">284,315 (99.83%)</tspan></text>
+    <text x="16" y="162" class="card-meta">• Features: <tspan fill="#cbd5e1" font-weight="600">30 total</tspan></text>
+    <text x="28" y="180" class="card-meta">- Time (Index 0)</text>
+    <text x="28" y="196" class="card-meta">- V1–V28 PCA (Indices 1–28)</text>
+    <text x="28" y="212" class="card-meta">- Amount (Index 29)</text>
+  </g>
+
+  <!-- Arrow: Raw -> Stratified Split -->
+  <path d="M 240 205 L 286 205" fill="none" stroke="#6366f1" stroke-width="2.2" marker-end="url(#arrowBlue)" />
+
+  <!-- ================= 2. STRATIFIED SPLIT BOX ================= -->
+  <g transform="translate(290, 90)" filter="url(#flowShadow)">
+    <rect width="210" height="230" rx="12" fill="url(#trainCardGrad)" stroke="#6366f1" stroke-width="1.5" />
+    <rect x="14" y="14" width="80" height="20" rx="5" fill="#6366f1" fill-opacity="0.3" />
+    <text x="54" y="28" text-anchor="middle" fill="#a5b4fc" class="step-badge">2. SPLITTING</text>
+    
+    <text x="16" y="58" class="card-title">Stratified 80/20 Split</text>
+    <text x="16" y="74" class="card-meta">train_test_split (seed=42, stratify=y)</text>
+    
+    <line x1="16" y1="88" x2="194" y2="88" stroke="#1e293b" stroke-width="1" />
+    
+    <rect x="14" y="100" width="182" height="52" rx="8" fill="#1e1b4b" stroke="#4338ca" stroke-width="1" />
+    <text x="22" y="118" class="card-highlight" fill="#c7d2fe">X_train Split (80%):</text>
+    <text x="22" y="134" class="card-meta">227,845 rows (394 frauds)</text>
+    
+    <rect x="14" y="162" width="182" height="52" rx="8" fill="#451a03" stroke="#b45309" stroke-width="1" />
+    <text x="22" y="180" class="card-highlight" fill="#fde68a">X_test Held-Out (20%):</text>
+    <text x="22" y="196" class="card-meta">56,962 rows (98 frauds)</text>
+  </g>
+
+  <!-- Arrow: Train -> Preprocessing -->
+  <path d="M 500 135 L 536 135" fill="none" stroke="#10b981" stroke-width="2.2" marker-end="url(#arrowGreen)" />
+  <!-- Arrow: Test -> Held-Out Test Evaluation -->
+  <path d="M 500 245 L 750 245 L 750 354" fill="none" stroke="#f59e0b" stroke-width="2.2" marker-end="url(#arrowAmber)" />
+  <rect x="580" y="235" width="124" height="18" rx="4" fill="#451a03" stroke="#b45309" stroke-width="0.8" />
+  <text x="642" y="248" text-anchor="middle" class="edge-label" fill="#fde68a">Untouched Test Split</text>
+
+  <!-- ================= 3. PREPROCESSING BOX ================= -->
+  <g transform="translate(540, 50)" filter="url(#flowShadow)">
+    <rect width="210" height="170" rx="12" fill="url(#trainCardGrad)" stroke="#10b981" stroke-width="1.5" />
+    <rect x="14" y="14" width="95" height="20" rx="5" fill="#065f46" fill-opacity="0.4" />
+    <text x="61" y="28" text-anchor="middle" fill="#6ee7b7" class="step-badge">3. PREPROCESS</text>
+    
+    <text x="16" y="56" class="card-title">ColumnTransformer</text>
+    <text x="16" y="70" class="card-meta">Fitted ONLY on X_train</text>
+    
+    <line x1="16" y1="80" x2="194" y2="80" stroke="#1e293b" stroke-width="1" />
+    
+    <text x="16" y="98" class="card-meta">• <tspan fill="#34d399" font-weight="600">StandardScaler:</tspan> Time &amp; Amount</text>
+    <text x="16" y="116" class="card-meta">• <tspan fill="#38bdf8" font-weight="600">Passthrough:</tspan> V1–V28 PCA</text>
+    <text x="16" y="136" class="card-meta" fill="#34d399">✓ Zero Data Leakage</text>
+    <text x="16" y="150" class="card-meta">(Test statistics never observed)</text>
+  </g>
+
+  <!-- Arrow: Preprocessing -> SMOTE -->
+  <path d="M 750 135 L 786 135" fill="none" stroke="#10b981" stroke-width="2.2" marker-end="url(#arrowGreen)" />
+
+  <!-- ================= 4. SMOTE OVERSAMPLING BOX ================= -->
+  <g transform="translate(790, 50)" filter="url(#flowShadow)">
+    <rect width="180" height="170" rx="12" fill="url(#trainCardGrad)" stroke="#10b981" stroke-width="1.5" />
+    <rect x="14" y="14" width="70" height="20" rx="5" fill="#065f46" fill-opacity="0.4" />
+    <text x="49" y="28" text-anchor="middle" fill="#6ee7b7" class="step-badge">4. SMOTE</text>
+    
+    <text x="16" y="56" class="card-title">Synthetic Resample</text>
+    <text x="16" y="70" class="card-meta">Applied ONLY to Train Data</text>
+    
+    <line x1="16" y1="80" x2="164" y2="80" stroke="#1e293b" stroke-width="1" />
+    
+    <text x="16" y="98" class="card-meta">• Balance: <tspan fill="#6ee7b7" font-weight="600">50 / 50 ratio</tspan></text>
+    <text x="16" y="116" class="card-meta">• Normal: <tspan fill="#f1f5f9" font-weight="600">227,451</tspan></text>
+    <text x="16" y="134" class="card-meta">• Synthetic: <tspan fill="#f87171" font-weight="600">227,451</tspan></text>
+    <text x="16" y="152" class="card-meta">(Test set remains 100% natural)</text>
+  </g>
+
+  <!-- Arrow: SMOTE down to XGBoost -->
+  <path d="M 880 220 L 880 286" fill="none" stroke="#10b981" stroke-width="2.2" marker-end="url(#arrowGreen)" />
+
+  <!-- ================= 5. MODEL TRAINING (XGBOOST) ================= -->
+  <g transform="translate(790, 290)" filter="url(#flowShadow)">
+    <rect width="180" height="150" rx="12" fill="url(#trainCardGrad)" stroke="#10b981" stroke-width="1.5" />
+    <rect x="14" y="14" width="80" height="20" rx="5" fill="#065f46" fill-opacity="0.4" />
+    <text x="54" y="28" text-anchor="middle" fill="#6ee7b7" class="step-badge">5. TRAINING</text>
+    
+    <text x="16" y="56" class="card-title">XGBClassifier</text>
+    <text x="16" y="70" class="card-meta">Trained on Balanced Set</text>
+    
+    <line x1="16" y1="80" x2="164" y2="80" stroke="#1e293b" stroke-width="1" />
+    
+    <text x="16" y="98" class="card-meta">• n_estimators: <tspan fill="#f1f5f9" font-weight="600">100</tspan></text>
+    <text x="16" y="116" class="card-meta">• eval_metric: <tspan fill="#f1f5f9" font-weight="600">logloss</tspan></text>
+    <text x="16" y="134" class="card-meta">• random_state: <tspan fill="#f1f5f9" font-weight="600">42</tspan></text>
+  </g>
+
+  <!-- Arrow: XGBoost down to Evaluation -->
+  <path d="M 880 440 L 880 486" fill="none" stroke="#10b981" stroke-width="2.2" marker-end="url(#arrowGreen)" />
+
+  <!-- ================= 6. HELD-OUT TEST EVALUATION ================= -->
+  <g transform="translate(560, 360)" filter="url(#flowShadow)">
+    <rect width="410" height="290" rx="14" fill="url(#trainCardGrad)" stroke="#f59e0b" stroke-width="1.8" />
+    <rect x="18" y="16" width="130" height="22" rx="6" fill="#78350f" fill-opacity="0.4" />
+    <text x="83" y="31" text-anchor="middle" fill="#fde68a" class="step-badge">6. TEST EVALUATION</text>
+    
+    <text x="18" y="60" class="card-title" font-size="16">Held-Out Test Results (N = 56,962, Threshold = 0.5)</text>
+    <text x="18" y="76" class="card-meta">Zero data leakage • Untouched realistic fraud distribution (0.17%)</text>
+    
+    <line x1="18" y1="88" x2="392" y2="88" stroke="#1e293b" stroke-width="1" />
+
+    <!-- Metric Badges 2x2 grid -->
+    <g transform="translate(18, 100)">
+      <rect width="88" height="48" rx="8" fill="#1e1b4b" stroke="#4338ca" stroke-width="1" />
+      <text x="44" y="20" text-anchor="middle" class="card-meta">ROC-AUC</text>
+      <text x="44" y="38" text-anchor="middle" font-size="15" font-weight="800" fill="#a5b4fc">97.92%</text>
+
+      <rect x="96" y="0" width="88" height="48" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="140" y="20" text-anchor="middle" class="card-meta">PR-AUC</text>
+      <text x="140" y="38" text-anchor="middle" font-size="15" font-weight="800" fill="#6ee7b7">87.74%</text>
+
+      <rect x="192" y="0" width="88" height="48" rx="8" fill="#082f49" stroke="#0284c7" stroke-width="1" />
+      <text x="236" y="20" text-anchor="middle" class="card-meta">Precision</text>
+      <text x="236" y="38" text-anchor="middle" font-size="15" font-weight="800" fill="#7dd3fc">73.11%</text>
+
+      <rect x="288" y="0" width="88" height="48" rx="8" fill="#451a03" stroke="#b45309" stroke-width="1" />
+      <text x="332" y="20" text-anchor="middle" class="card-meta">Recall</text>
+      <text x="332" y="38" text-anchor="middle" font-size="15" font-weight="800" fill="#fde68a">88.78%</text>
+    </g>
+
+    <!-- Confusion Matrix Box -->
+    <g transform="translate(18, 162)">
+      <rect width="374" height="110" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
+      <text x="16" y="24" font-size="12" font-weight="700" fill="#f8fafc">Held-Out Test Confusion Matrix:</text>
+      
+      <text x="24" y="48" class="card-meta">Actual Legitimate (0):</text>
+      <rect x="160" y="34" width="94" height="20" rx="4" fill="#064e3b" />
+      <text x="207" y="48" text-anchor="middle" font-size="11" font-weight="700" fill="#a7f3d0">TN = 56,832</text>
+      <rect x="264" y="34" width="84" height="20" rx="4" fill="#7f1d1d" fill-opacity="0.4" />
+      <text x="306" y="48" text-anchor="middle" font-size="11" font-weight="700" fill="#fca5a5">FP = 32</text>
+
+      <text x="24" y="78" class="card-meta">Actual Fraud (1):</text>
+      <rect x="160" y="64" width="94" height="20" rx="4" fill="#7f1d1d" fill-opacity="0.4" />
+      <text x="207" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#fca5a5">FN = 11</text>
+      <rect x="264" y="64" width="84" height="20" rx="4" fill="#064e3b" />
+      <text x="306" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#a7f3d0">TP = 87</text>
+
+      <text x="16" y="98" font-size="10" fill="#94a3b8">Captured 87 out of 98 fraud attacks with only 32 false alarms in 56,864 transactions</text>
+    </g>
+  </g>
+
+  <!-- ================= 7. ARTIFACT EXPORT BOX ================= -->
+  <g transform="translate(30, 360)" filter="url(#flowShadow)">
+    <rect width="480" height="290" rx="14" fill="url(#trainCardGrad)" stroke="#a855f7" stroke-width="1.8" />
+    <rect x="18" y="16" width="130" height="22" rx="6" fill="#581c87" fill-opacity="0.4" />
+    <text x="83" y="31" text-anchor="middle" fill="#d8b4fe" class="step-badge">7. ARTIFACT EXPORT</text>
+    
+    <text x="18" y="60" class="card-title" font-size="16">Serialized Canonical Artifacts (backend/models/)</text>
+    <text x="18" y="76" class="card-meta">End-to-end reproducible inference bundle verified against held-out tests</text>
+    
+    <line x1="18" y1="88" x2="462" y2="88" stroke="#1e293b" stroke-width="1" />
+
+    <g transform="translate(18, 102)">
+      <rect width="444" height="42" rx="8" fill="#1e1b4b" stroke="#4338ca" stroke-width="1" />
+      <text x="14" y="20" font-size="12" font-weight="700" fill="#c7d2fe">📦 fraud_detection_pipeline.pkl (413 KB)</text>
+      <text x="14" y="34" class="card-meta">imblearn.Pipeline: ColumnTransformer (StandardScaler) + SMOTE + XGBClassifier</text>
+
+      <rect y="50" width="444" height="38" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="14" y="68" font-size="12" font-weight="700" fill="#a7f3d0">📊 metrics.json (1.5 KB)</text>
+      <text x="14" y="82" class="card-meta">Verified metrics: ROC-AUC 97.92%, PR-AUC 87.74%, Precision 73.11%, Recall 88.78%</text>
+
+      <rect y="96" width="444" height="38" rx="8" fill="#451a03" stroke="#b45309" stroke-width="1" />
+      <text x="14" y="114" font-size="12" font-weight="700" fill="#fde68a">🧪 sample_transactions.json (2.6 KB)</text>
+      <text x="14" y="128" class="card-meta">Ground-truth test vectors: Verified Legitimate (0.00% risk) &amp; Fraud (99.99% risk)</text>
+
+      <rect y="142" width="444" height="32" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
+      <text x="14" y="158" font-size="11" font-weight="600" fill="#94a3b8">🛡️ preprocessor.pkl (3.0 KB) &amp; fraud_detection_model.pkl (Rollback)</text>
+    </g>
+  </g>
+
+  <!-- Connect Evaluation to Artifact Export -->
+  <path d="M 560 500 L 518 500" fill="none" stroke="#a855f7" stroke-width="2.2" marker-end="url(#arrowPurple)" />
+  <rect x="522" y="490" width="34" height="18" rx="4" fill="#3b0764" stroke="#7e22ce" stroke-width="0.8" />
+  <text x="539" y="502" text-anchor="middle" class="edge-label" fill="#e9d5ff">SYNC</text>
+
+</svg>

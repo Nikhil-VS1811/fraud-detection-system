@@ -1,0 +1,275 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680" style="background:#0a0d14; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141926" />
+      <stop offset="100%" stop-color="#11151f" />
+    </linearGradient>
+    <linearGradient id="clientGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="backendGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="storageGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.05" />
+    </linearGradient>
+
+    <!-- Arrow Markers -->
+    <marker id="arrowIndigo" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#818cf8" />
+    </marker>
+    <marker id="arrowEmerald" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#34d399" />
+    </marker>
+    <marker id="arrowSky" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#c084fc" />
+    </marker>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="boxShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <style>
+    .title-text { fill: #f8fafc; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+    .subtitle-text { fill: #94a3b8; font-size: 12px; font-weight: 500; }
+    .group-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .node-title { fill: #f1f5f9; font-size: 13px; font-weight: 600; }
+    .node-desc { fill: #94a3b8; font-size: 11px; }
+    .node-badge { font-size: 10px; font-weight: 700; }
+    .edge-text { font-size: 10px; font-weight: 600; fill: #cbd5e1; }
+  </style>
+
+  <!-- Canvas Background -->
+  <rect width="1000" height="680" rx="16" fill="#0a0d14" stroke="#1e293b" stroke-width="1.5" />
+
+  <!-- Header Banner -->
+  <g transform="translate(30, 24)">
+    <rect width="42" height="42" rx="10" fill="url(#headerGrad)" filter="url(#boxShadow)" />
+    <text x="21" y="27" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="800">FD</text>
+    <text x="56" y="22" class="title-text">Fraud Detection System — Architecture &amp; Request Flow</text>
+    <text x="56" y="38" class="subtitle-text">Real-time inference pipeline connecting React frontend, FastAPI service, XGBoost model, and PostgreSQL</text>
+  </g>
+
+  <!-- ================= SUBGRAPH 1: FRONTEND (CLIENT) ================= -->
+  <g transform="translate(30, 88)">
+    <!-- Container Box -->
+    <rect width="280" height="552" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="280" height="42" rx="14" fill="url(#clientGrad)" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.3" />
+    <circle cx="24" cy="21" r="5" fill="#38bdf8" />
+    <text x="38" y="25" class="group-label" fill="#38bdf8">Frontend Client (React 18 + Vite)</text>
+
+    <!-- Node 1: Analytics Dashboard -->
+    <g transform="translate(16, 56)" filter="url(#boxShadow)">
+      <rect width="248" height="96" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#0284c7" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#38bdf8" font-size="13">📊</text>
+      <text x="50" y="27" class="node-title">Risk &amp; Analytics Dashboard</text>
+      <text x="50" y="42" class="node-desc">Metric cards (Precision, Recall, F1)</text>
+      <text x="50" y="56" class="node-desc">Recharts pie distribution &amp; bars</text>
+      <text x="50" y="70" class="node-desc">Model metadata overview card</text>
+      <rect x="180" y="76" width="56" height="15" rx="4" fill="#0369a1" fill-opacity="0.3" />
+      <text x="208" y="87" text-anchor="middle" fill="#7dd3fc" class="node-badge">Recharts</text>
+    </g>
+
+    <!-- Node 2: Transaction Form -->
+    <g transform="translate(16, 172)" filter="url(#boxShadow)">
+      <rect width="248" height="106" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#6366f1" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#818cf8" font-size="13">📝</text>
+      <text x="50" y="27" class="node-title">Prediction Form (30 Features)</text>
+      <text x="50" y="42" class="node-desc">Inputs: Time, V1–V28 PCA, Amount</text>
+      <text x="50" y="56" class="node-desc">Strict client validation (NaN/empty)</text>
+      <text x="50" y="70" class="node-desc">Real-time risk verdict &amp; prob % bar</text>
+      <rect x="166" y="82" width="70" height="16" rx="4" fill="#4338ca" fill-opacity="0.3" />
+      <text x="201" y="94" text-anchor="middle" fill="#a5b4fc" class="node-badge">POST /predict</text>
+    </g>
+
+    <!-- Node 3: Ground-Truth Sample Buttons -->
+    <g transform="translate(16, 298)" filter="url(#boxShadow)">
+      <rect width="248" height="114" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#10b981" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#34d399" font-size="13">🧪</text>
+      <text x="50" y="27" class="node-title">Verified Test Case Loader</text>
+      <text x="50" y="44" class="node-desc">• Sample Legitimate (Ground Truth 0)</text>
+      <text x="50" y="58" class="node-desc">• Sample Fraud (Ground Truth 1)</text>
+      <text x="50" y="72" class="node-desc">Ground-truth verification badge</text>
+      <text x="50" y="86" class="node-desc">Bundled fallback in sampleData.js</text>
+      <rect x="164" y="92" width="72" height="16" rx="4" fill="#065f46" fill-opacity="0.3" />
+      <text x="200" y="104" text-anchor="middle" fill="#6ee7b7" class="node-badge">GET /samples</text>
+    </g>
+
+    <!-- Node 4: History Table -->
+    <g transform="translate(16, 432)" filter="url(#boxShadow)">
+      <rect width="248" height="96" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#f59e0b" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#fbbf24" font-size="13">📜</text>
+      <text x="50" y="27" class="node-title">Transaction History Table</text>
+      <text x="50" y="42" class="node-desc">Deduplicated audit rows</text>
+      <text x="50" y="56" class="node-desc">Status badge, probability, timestamp</text>
+      <text x="50" y="70" class="node-desc">Auto-refresh upon scored prediction</text>
+      <rect x="156" y="76" width="80" height="15" rx="4" fill="#78350f" fill-opacity="0.3" />
+      <text x="196" y="87" text-anchor="middle" fill="#fcd34d" class="node-badge">/transactions</text>
+    </g>
+  </g>
+
+  <!-- ================= SUBGRAPH 2: BACKEND (FASTAPI) ================= -->
+  <g transform="translate(360, 88)">
+    <!-- Container Box -->
+    <rect width="320" height="552" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="320" height="42" rx="14" fill="url(#backendGrad)" stroke="#10b981" stroke-width="1" stroke-opacity="0.3" />
+    <circle cx="24" cy="21" r="5" fill="#10b981" />
+    <text x="38" y="25" class="group-label" fill="#10b981">Backend Engine (FastAPI + ML)</text>
+
+    <!-- Node 1: FastAPI Router & Middleware -->
+    <g transform="translate(16, 56)" filter="url(#boxShadow)">
+      <rect width="288" height="96" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#10b981" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#34d399" font-size="13">⚡</text>
+      <text x="50" y="27" class="node-title">FastAPI Router &amp; CORS</text>
+      <text x="50" y="42" class="node-desc">Endpoints: /, /health, /metrics, /samples</text>
+      <text x="50" y="56" class="node-desc">/model-info, /transactions, /predict</text>
+      <text x="50" y="70" class="node-desc">CORS enabled for recruiter portfolio demo</text>
+      <rect x="206" y="76" width="70" height="15" rx="4" fill="#065f46" fill-opacity="0.3" />
+      <text x="241" y="87" text-anchor="middle" fill="#6ee7b7" class="node-badge">FastAPI 0.136</text>
+    </g>
+
+    <!-- Node 2: Input Validator -->
+    <g transform="translate(16, 172)" filter="url(#boxShadow)">
+      <rect width="288" height="96" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#0284c7" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#38bdf8" font-size="13">🛡️</text>
+      <text x="50" y="27" class="node-title">Pydantic &amp; NumPy Validation</text>
+      <text x="50" y="42" class="node-desc">Strict verification: exactly 30 features</text>
+      <text x="50" y="56" class="node-desc">Rejects NaN &amp; Inf with HTTP 400</text>
+      <text x="50" y="70" class="node-desc">Maps to canonical column order (Time, V1..)</text>
+      <rect x="216" y="76" width="60" height="15" rx="4" fill="#0369a1" fill-opacity="0.3" />
+      <text x="246" y="87" text-anchor="middle" fill="#7dd3fc" class="node-badge">Validation</text>
+    </g>
+
+    <!-- Node 3: Canonical Pipeline -->
+    <g transform="translate(16, 288)" filter="url(#boxShadow)">
+      <rect width="288" height="120" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#f97316" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#fb923c" font-size="13">⚙️</text>
+      <text x="50" y="27" class="node-title">Canonical Pipeline Inference</text>
+      <text x="50" y="42" class="node-desc">• Step 1: Preprocess (StandardScaler Time, Amt)</text>
+      <text x="50" y="56" class="node-desc">• Step 2: Passthrough V1–V28 PCA features</text>
+      <text x="50" y="70" class="node-desc">• Step 3: XGBClassifier (100 trees, logloss)</text>
+      <text x="50" y="84" class="node-desc">• Output: Predict Class &amp; Predict Proba</text>
+      <rect x="194" y="96" width="82" height="16" rx="4" fill="#7c2d12" fill-opacity="0.3" />
+      <text x="235" y="108" text-anchor="middle" fill="#fdba74" class="node-badge">imblearn.Pipeline</text>
+    </g>
+
+    <!-- Node 4: SHAP Explainer -->
+    <g transform="translate(16, 428)" filter="url(#boxShadow)">
+      <rect width="288" height="100" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#8b5cf6" fill-opacity="0.2" />
+      <text x="28" y="32" text-anchor="middle" fill="#c084fc" font-size="13">🔍</text>
+      <text x="50" y="27" class="node-title">SHAP TreeExplainer &amp; Fallback</text>
+      <text x="50" y="42" class="node-desc">Computes local marginal contributions</text>
+      <text x="50" y="56" class="node-desc">Ranks top 5 features by absolute impact</text>
+      <text x="50" y="70" class="node-desc">Automatic fallback to feature importances</text>
+      <rect x="198" y="78" width="78" height="16" rx="4" fill="#581c87" fill-opacity="0.3" />
+      <text x="237" y="90" text-anchor="middle" fill="#d8b4fe" class="node-badge">SHAP Explainer</text>
+    </g>
+  </g>
+
+  <!-- ================= SUBGRAPH 3: PERSISTENCE & STORAGE ================= -->
+  <g transform="translate(730, 88)">
+    <!-- Container Box -->
+    <rect width="240" height="552" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="240" height="42" rx="14" fill="url(#storageGrad)" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.3" />
+    <circle cx="24" cy="21" r="5" fill="#a855f7" />
+    <text x="38" y="25" class="group-label" fill="#c084fc">Storage &amp; Models</text>
+
+    <!-- Node 1: PostgreSQL Neon Database -->
+    <g transform="translate(16, 60)" filter="url(#boxShadow)">
+      <rect width="208" height="196" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <!-- Cylinder top -->
+      <path d="M 24 24 C 24 18, 64 18, 64 24 C 64 30, 24 30, 24 24 Z" fill="#8b5cf6" fill-opacity="0.4" stroke="#a855f7" stroke-width="1.2" />
+      <path d="M 24 24 L 24 44 C 24 50, 64 50, 64 44 L 64 24" fill="none" stroke="#a855f7" stroke-width="1.2" />
+      <text x="44" y="38" text-anchor="middle" fill="#e9d5ff" font-size="10" font-weight="700">DB</text>
+      <text x="76" y="27" class="node-title">Neon PostgreSQL</text>
+      <text x="76" y="42" class="node-desc">Cloud Postgres 16</text>
+      
+      <line x1="16" y1="62" x2="192" y2="62" stroke="#1e293b" stroke-width="1" />
+      
+      <text x="24" y="80" class="node-desc" font-weight="600" fill="#f1f5f9">Table: prediction_logs</text>
+      <text x="24" y="98" class="node-desc">• id (Primary Key Serial)</text>
+      <text x="24" y="114" class="node-desc">• fraud_prediction (0 / 1)</text>
+      <text x="24" y="130" class="node-desc">• fraud_probability (Float)</text>
+      <text x="24" y="146" class="node-desc">• timestamp (UTC DateTime)</text>
+      <text x="24" y="168" class="node-desc" fill="#34d399">✓ Guarded failure isolation</text>
+      <text x="24" y="182" class="node-desc" fill="#94a3b8">(DB outage never fails API)</text>
+    </g>
+
+    <!-- Node 2: Serialized Model Artifacts -->
+    <g transform="translate(16, 288)" filter="url(#boxShadow)">
+      <rect width="208" height="236" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" />
+      <rect x="16" y="16" width="30" height="30" rx="6" fill="#6366f1" fill-opacity="0.2" />
+      <text x="31" y="36" text-anchor="middle" fill="#818cf8" font-size="14">📦</text>
+      <text x="56" y="28" class="node-title">Model Artifacts</text>
+      <text x="56" y="42" class="node-desc">backend/models/</text>
+
+      <line x1="16" y1="58" x2="192" y2="58" stroke="#1e293b" stroke-width="1" />
+
+      <text x="24" y="78" class="node-desc" font-weight="600" fill="#f1f5f9">Canonical Pipeline:</text>
+      <text x="24" y="94" class="node-desc" fill="#a5b4fc">• fraud_detection_pipeline.pkl</text>
+      <text x="32" y="108" class="node-desc" fill="#64748b">(413 KB, imblearn Pipeline)</text>
+
+      <text x="24" y="130" class="node-desc" font-weight="600" fill="#f1f5f9">Pre-computed Metrics:</text>
+      <text x="24" y="146" class="node-desc" fill="#34d399">• metrics.json (97.92% ROC)</text>
+
+      <text x="24" y="168" class="node-desc" font-weight="600" fill="#f1f5f9">Ground-Truth Cases:</text>
+      <text x="24" y="184" class="node-desc" fill="#fcd34d">• sample_transactions.json</text>
+
+      <text x="24" y="206" class="node-desc" font-weight="600" fill="#f1f5f9">Rollback Model:</text>
+      <text x="24" y="222" class="node-desc" fill="#94a3b8">• fraud_detection_model.pkl</text>
+    </g>
+  </g>
+
+  <!-- ================= CONNECTING EDGES & LABELS ================= -->
+  <!-- 1. Form -> FastAPI /predict -->
+  <path d="M 280 295 L 368 295" fill="none" stroke="#818cf8" stroke-width="2" marker-end="url(#arrowIndigo)" />
+  <rect x="290" y="284" width="70" height="15" rx="3" fill="#1e1b4b" stroke="#4338ca" stroke-width="0.8" />
+  <text x="325" y="295" text-anchor="middle" class="edge-text" fill="#a5b4fc">POST /predict</text>
+
+  <!-- 2. Dashboard -> FastAPI /metrics & /model-info -->
+  <path d="M 280 180 L 368 180" fill="none" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrowSky)" />
+  <rect x="286" y="169" width="76" height="15" rx="3" fill="#082f49" stroke="#0284c7" stroke-width="0.8" />
+  <text x="324" y="180" text-anchor="middle" class="edge-text" fill="#7dd3fc">GET /metrics</text>
+
+  <!-- 3. Samples -> FastAPI /samples -->
+  <path d="M 280 415 L 368 415" fill="none" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrowEmerald)" />
+  <rect x="286" y="404" width="76" height="15" rx="3" fill="#022c22" stroke="#059669" stroke-width="0.8" />
+  <text x="324" y="415" text-anchor="middle" class="edge-text" fill="#6ee7b7">GET /samples</text>
+
+  <!-- 4. History Table -> FastAPI /transactions -->
+  <path d="M 280 550 L 368 550" fill="none" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#arrowIndigo)" />
+  <rect x="284" y="539" width="80" height="15" rx="3" fill="#451a03" stroke="#b45309" stroke-width="0.8" />
+  <text x="324" y="550" text-anchor="middle" class="edge-text" fill="#fde68a">/transactions</text>
+
+  <!-- 5. FastAPI -> PostgreSQL DB (write log) -->
+  <path d="M 664 220 L 738 220" fill="none" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrowEmerald)" />
+  <rect x="670" y="209" width="60" height="15" rx="3" fill="#022c22" stroke="#059669" stroke-width="0.8" />
+  <text x="700" y="220" text-anchor="middle" class="edge-text" fill="#6ee7b7">Async Log</text>
+
+  <!-- 6. FastAPI -> Serialized Model Artifacts (load pipeline) -->
+  <path d="M 664 430 L 738 430" fill="none" stroke="#c084fc" stroke-width="1.8" marker-end="url(#arrowPurple)" />
+  <rect x="670" y="419" width="60" height="15" rx="3" fill="#3b0764" stroke="#7e22ce" stroke-width="0.8" />
+  <text x="700" y="430" text-anchor="middle" class="edge-text" fill="#e9d5ff">Load Model</text>
+
+</svg>

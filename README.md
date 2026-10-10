@@ -26,39 +26,7 @@ A full-stack machine learning application designed to identify fraudulent transa
 
 ## System Architecture
 
-```mermaid
-flowchart TD
-    subgraph Client ["Frontend: React 18 and Vite"]
-        UI["Analytics and Risk Dashboard"]
-        Form["Transaction Input Form"]
-        SampleButtons["Sample Test Cases: Legitimate and Fraud"]
-    end
-
-    subgraph Backend ["Backend API: FastAPI"]
-        API["FastAPI REST Endpoints"]
-        Validator["Validation: 30 Finite Features"]
-        Pipeline["Canonical Pipeline: StandardScaler and XGBoost"]
-        Explainer["SHAP TreeExplainer and Attribution Fallback"]
-    end
-
-    subgraph Storage ["Persistence and Artifacts"]
-        NeonDB[("Neon PostgreSQL Database")]
-        Models["Serialized Models in backend/models/"]
-    end
-
-    Form -->|"POST /predict"| API
-    SampleButtons -->|"GET /samples or Bundled"| Form
-    UI -->|"GET /metrics and /model-info"| API
-    UI -->|"GET /transactions"| API
-
-    API --> Validator
-    Validator --> Pipeline
-    Pipeline --> Models
-    Pipeline --> Explainer
-    Explainer --> API
-    API -->|"Non-blocking write"| NeonDB
-    API -->|"JSON: Risk, Probability, SHAP"| UI
-```
+![System Architecture](docs/images/system-architecture.svg)
 
 ---
 
@@ -78,22 +46,7 @@ The model is trained on the Kaggle Credit Card Fraud Detection benchmark dataset
 
 To prevent data leakage, splitting occurs on raw features before any statistics are computed:
 
-```mermaid
-flowchart LR
-    A["Raw Data: 284,807 rows"] --> B["Stratified Split: 80/20, seed 42"]
-    B --> C["Train Set: 227,845 rows, 394 frauds"]
-    B --> D["Held-Out Test Set: 56,962 rows, 98 frauds"]
-
-    C --> E["Fit Preprocessor on Train: Scale Time and Amount, Passthrough V1-V28"]
-    E --> F["Transform Train Data"]
-    F --> G["Apply SMOTE to Train: Balance 50/50, seed 42"]
-    G --> H["Train XGBoost: 100 estimators, logloss"]
-
-    E -.->|"Apply Fitted Preprocessor"| I["Transform Held-Out Test Data"]
-    H --> J["Evaluate on Untouched Test Set"]
-    I --> J
-    J --> K["Export Canonical Pipeline Artifact"]
-```
+![ML Training Flow](docs/images/ml-training-flow.svg)
 
 1. **Stratified Splitting:** The raw dataset is partitioned into an $80\%$ training split ($227,845$ transactions) and a $20\%$ held-out test split ($56,962$ transactions) using `stratify=y` with `random_state=42`.
 2. **Train-Only Scaling:** A scikit-learn `ColumnTransformer` fits separate `StandardScaler` instances exclusively on $X_{train}$ for `Time` (column index 0) and `Amount` (column index 29). Features `V1` through `V28` (indices 1–28) are passed through unmodified. Test set statistics are never observed during fitting.
