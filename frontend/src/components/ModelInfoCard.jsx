@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const API_BASE =
-  (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) || "/api";
+  (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) ||
+  "https://fraud-backend-km6z.onrender.com";
 
 export default function ModelInfoCard() {
   const [info, setInfo] = useState(null);

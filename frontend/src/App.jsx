@@ -3,6 +3,7 @@ import axios from "axios";
 import AnalyticsCharts from "./components/AnalyticsCharts";
 import TopContributors from "./components/TopContributors";
 import ModelInfoCard from "./components/ModelInfoCard";
+import { SAMPLE_TRANSACTIONS } from "./sampleData";
 
 import "./App.css";
 
@@ -47,26 +48,42 @@ function MetricCard({ label, value }) {
   );
 }
 
-function PredictionForm({ onPredicted }) {
+function PredictionForm({ onPredicted, sampleData }) {
   const [features, setFeatures] = useState(Array(30).fill(""));
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const [activeSample, setActiveSample] = useState(null);
 
   const updateFeature = (i, v) => {
     const next = [...features];
     next[i] = v;
     setFeatures(next);
+    if (activeSample) {
+      setActiveSample(null);
+    }
   };
 
-  const fillSample = () => {
-    setFeatures(
-      Array.from({ length: 30 }, () => (Math.random() * 2 - 1).toFixed(4))
-    );
+  const loadSample = (type) => {
+    const source = (sampleData && sampleData[type]) || SAMPLE_TRANSACTIONS[type];
+    if (!source || !Array.isArray(source.features)) {
+      setError(`Sample '${type}' is unavailable.`);
+      return;
+    }
+
+    setFeatures(source.features.map((val) => String(val)));
+    setActiveSample({
+      key: type,
+      label: source.label || (type === "fraud" ? "Fraud Case (Class 1)" : "Legitimate Case (Class 0)"),
+      groundTruth: source.ground_truth ?? (type === "fraud" ? 1 : 0),
+    });
+    setResult(null);
+    setError("");
   };
 
   const clearAll = () => {
     setFeatures(Array(30).fill(""));
+    setActiveSample(null);
     setResult(null);
     setError("");
   };
@@ -104,20 +121,38 @@ function PredictionForm({ onPredicted }) {
     <div className="card">
       <div className="card-header">
         <div>
-          <h2 className="card-title">Fraud Prediction</h2>
+          <h2 className="card-title">Fraud Prediction Demo</h2>
           <p className="card-subtitle">
-            Enter all 30 transaction features (Time, V1–V28, Amount).
+            Enter all 30 transaction features or load verified test cases from the held-out Kaggle test set.
           </p>
         </div>
         <div className="card-actions">
-          <button type="button" className="btn btn-ghost" onClick={fillSample}>
-            Sample
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => loadSample("legitimate")}
+          >
+            Sample Legitimate
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => loadSample("fraud")}
+          >
+            Sample Fraud
           </button>
           <button type="button" className="btn btn-ghost" onClick={clearAll}>
             Clear
           </button>
         </div>
       </div>
+
+      {activeSample && (
+        <div className="sample-loaded-banner">
+          <span className="badge badge-info">Verified Test Case</span>
+          <span>{activeSample.label}</span>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="features-grid">
@@ -168,13 +203,29 @@ function PredictionForm({ onPredicted }) {
                   className={`prob-bar-fill ${
                     isFraud ? "fill-danger" : "fill-success"
                   }`}
-                  style={{ width: `${result.fraud_probability * 100}%` }}
+                  style={{ width: `${Math.min(100, Math.max(0, result.fraud_probability * 100))}%` }}
                 />
               </div>
+
+              {activeSample && (
+                <div className="ground-truth-match">
+                  <span>
+                    <strong>Ground Truth:</strong> Class {activeSample.groundTruth} (
+                    {activeSample.groundTruth === 1 ? "Fraud" : "Legitimate"})
+                  </span>
+                  <span>•</span>
+                  <span>
+                    <strong>Model Match:</strong>{" "}
+                    {(isFraud ? 1 : 0) === activeSample.groundTruth
+                      ? "✅ Correct"
+                      : "❌ Discrepancy"}
+                  </span>
+                </div>
+              )}
             </div>
             <TopContributors
-  topContributors={result?.top_contributors || []}
-/>
+              topContributors={result?.top_contributors || []}
+            />
           </div>
         )}
       </form>
@@ -230,7 +281,7 @@ function TransactionsTable({ rows, loading }) {
                 const isFraud = r.fraud_prediction === 1;
                 const prob = r.fraud_probability;
                 return (
-                  <tr key={r.id ?? idx}>
+                  <tr key={r.id != null ? `tx-${r.id}` : `tx-idx-${idx}`}>
                     <td className="muted">{r.id ?? idx + 1}</td>
                     <td>
                       <span
@@ -259,6 +310,7 @@ function TransactionsTable({ rows, loading }) {
 
 export default function App() {
   const [metrics, setMetrics] = useState(null);
+  const [samples, setSamples] = useState(SAMPLE_TRANSACTIONS);
   const [transactions, setTransactions] = useState([]);
   const [loadingTx, setLoadingTx] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -267,14 +319,28 @@ export default function App() {
     setLoadingTx(true);
     setLoadError("");
     try {
-      const [m, t] = await Promise.all([
+      const [m, t, s] = await Promise.all([
         api.get("/metrics"),
         api.get("/transactions"),
+        api.get("/samples").catch(() => ({ data: SAMPLE_TRANSACTIONS })),
       ]);
       setMetrics(m.data || {});
-      setTransactions(
-        Array.isArray(t.data) ? t.data : t.data?.transactions || []
-      );
+
+      const rawList = Array.isArray(t.data) ? t.data : t.data?.transactions || [];
+      const seen = new Set();
+      const deduped = [];
+      for (const item of rawList) {
+        const key = item.id != null ? item.id : `${item.timestamp}-${item.fraud_probability}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          deduped.push(item);
+        }
+      }
+      setTransactions(deduped);
+
+      if (s?.data && Object.keys(s.data).length > 0) {
+        setSamples(s.data);
+      }
     } catch (err) {
       setLoadError(
         err?.response?.data?.detail || err?.message || "Failed to load data."
@@ -311,14 +377,14 @@ export default function App() {
             <MetricCard key={key} label={label} value={metrics?.[key]} />
           ))}
         </section>
-          <ModelInfoCard />
-          <AnalyticsCharts
-  metrics={metrics}
-  transactions={transactions}
-/>
+        <ModelInfoCard />
+        <AnalyticsCharts
+          metrics={metrics}
+          transactions={transactions}
+        />
 
         <section>
-          <PredictionForm onPredicted={load} />
+          <PredictionForm onPredicted={load} sampleData={samples} />
         </section>
 
         <section>
