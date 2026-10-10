@@ -28,36 +28,36 @@ A full-stack machine learning application designed to identify fraudulent transa
 
 ```mermaid
 flowchart TD
-    subgraph Client["Frontend (React 18 + Vite)"]
-        UI["Analytics & Risk Dashboard"]
+    subgraph Client ["Frontend: React 18 and Vite"]
+        UI["Analytics and Risk Dashboard"]
         Form["Transaction Input Form"]
-        SampleButtons["Sample Test Cases (Legitimate / Fraud)"]
+        SampleButtons["Sample Test Cases: Legitimate and Fraud"]
     end
 
-    subgraph Backend["Backend API (FastAPI)"]
+    subgraph Backend ["Backend API: FastAPI"]
         API["FastAPI REST Endpoints"]
-        Validator["Pydantic & NumPy Validation (30 Features)"]
-        Pipeline["Canonical Pipeline (StandardScaler + XGBoost)"]
-        Explainer["SHAP TreeExplainer / Attribution Fallback"]
+        Validator["Validation: 30 Finite Features"]
+        Pipeline["Canonical Pipeline: StandardScaler and XGBoost"]
+        Explainer["SHAP TreeExplainer and Attribution Fallback"]
     end
 
-    subgraph Storage["Persistence & Artifacts"]
-        NeonDB[("Neon PostgreSQL (Prediction History)")]
-        Models["Serialized Models (backend/models/)"]
+    subgraph Storage ["Persistence and Artifacts"]
+        NeonDB[("Neon PostgreSQL Database")]
+        Models["Serialized Models in backend/models/"]
     end
 
-    Form -->|POST /predict| API
-    SampleButtons -->|GET /samples or Bundled| Form
-    UI -->|GET /metrics & /model-info| API
-    UI -->|GET /transactions| API
+    Form -->|"POST /predict"| API
+    SampleButtons -->|"GET /samples or Bundled"| Form
+    UI -->|"GET /metrics and /model-info"| API
+    UI -->|"GET /transactions"| API
 
     API --> Validator
     Validator --> Pipeline
     Pipeline --> Models
     Pipeline --> Explainer
     Explainer --> API
-    API -->|Non-blocking write| NeonDB
-    API -->|JSON Response: Risk, Prob, SHAP| UI
+    API -->|"Non-blocking write"| NeonDB
+    API -->|"JSON: Risk, Probability, SHAP"| UI
 ```
 
 ---
@@ -80,16 +80,16 @@ To prevent data leakage, splitting occurs on raw features before any statistics 
 
 ```mermaid
 flowchart LR
-    A["Raw Data (284,807 rows)"] --> B["Stratified Split (80/20, seed=42)"]
-    B --> C["Train Set (227,845 rows, 394 frauds)"]
-    B --> D["Held-Out Test Set (56,962 rows, 98 frauds)"]
+    A["Raw Data: 284,807 rows"] --> B["Stratified Split: 80/20, seed 42"]
+    B --> C["Train Set: 227,845 rows, 394 frauds"]
+    B --> D["Held-Out Test Set: 56,962 rows, 98 frauds"]
 
-    C --> E["Fit Preprocessor on Train Only (Scale Time & Amount, Passthrough V1-V28)"]
+    C --> E["Fit Preprocessor on Train: Scale Time and Amount, Passthrough V1-V28"]
     E --> F["Transform Train Data"]
-    F --> G["Apply SMOTE to Train Only (Balance 50/50, seed=42)"]
-    G --> H["Train XGBoost (100 estimators, logloss)"]
+    F --> G["Apply SMOTE to Train: Balance 50/50, seed 42"]
+    G --> H["Train XGBoost: 100 estimators, logloss"]
 
-    E -.->|Apply Fitted Preprocessor| I["Transform Held-Out Test Data"]
+    E -.->|"Apply Fitted Preprocessor"| I["Transform Held-Out Test Data"]
     H --> J["Evaluate on Untouched Test Set"]
     I --> J
     J --> K["Export Canonical Pipeline Artifact"]
